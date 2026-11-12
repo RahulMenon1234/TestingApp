@@ -22,7 +22,6 @@ jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,7 +34,7 @@ jobs:
       - name: Display .NET version
         run: dotnet --version
 
-       - name: Restore dependencies
+       -name: Restore dependencies
         working-directory: ./dotnet-demo
         run: dotnet restore
 
