@@ -5,9 +5,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'python-demo/**'
+      - '.github/workflows/python-demo-workflow.yml'
+
   pull_request:
     branches:
       - main
+    paths:
+      - 'python-demo/**'
+      - '.github/workflows/python-demo-workflow.yml'
+
   workflow_dispatch:
 
 jobs:
@@ -16,21 +24,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout source code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Setup Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      # Step 3: Validate Python version
       - name: Check Python version
         run: python --version
 
-      # Step 4: Compile Python files
       - name: Compile Python files
         run: python -m compileall -q python-demo/src python-demo/tests
 
@@ -40,21 +44,17 @@ jobs:
     needs: build
 
     steps:
-      # Step 1: Checkout source code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Setup Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      # Step 3: Install pytest
       - name: Install pytest
         run: python -m pip install pytest
 
-      # Step 4: Execute test cases
       - name: Run pytest
         working-directory: ./python-demo
         run: python -m pytest tests/ -v

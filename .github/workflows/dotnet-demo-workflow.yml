@@ -1,0 +1,48 @@
+
+name: DotNet Demo CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dotnet-demo/**'
+      - '.github/workflows/dotnet-demo-workflow.yml'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'dotnet-demo/**'
+      - '.github/workflows/dotnet-demo-workflow.yml'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Display .NET version
+        run: dotnet --version
+
+      - name: Restore dependencies
+        working-directory: ./dotnet-demo
+        run: dotnet restore DotNetDemo.sln
+
+      - name: Build application
+        working-directory: ./dotnet-demo
+        run: dotnet build DotNetDemo.sln --no-restore --configuration Release
+
+      - name: Run tests
+        working-directory: ./dotnet-demo
+        run: dotnet test DotNetDemo.sln --no-build --no-restore --configuration Release
