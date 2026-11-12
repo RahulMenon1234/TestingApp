@@ -35,14 +35,14 @@ jobs:
       - name: Display .NET version
         run: dotnet --version
 
-      - name: Restore dependencies
+       - name: Restore dependencies
         working-directory: ./dotnet-demo
-        run: dotnet restore DotNetDemo.sln
+        run: dotnet restore
 
       - name: Build application
         working-directory: ./dotnet-demo
-        run: dotnet build DotNetDemo.sln --no-restore --configuration Release
+        run: dotnet build --no-restore --configuration Release
 
       - name: Run tests
         working-directory: ./dotnet-demo
-        run: dotnet test DotNetDemo.sln --no-build --no-restore --configuration Release
+        run: dotnet test --no-build --no-restore --configuration Release
